@@ -4,7 +4,13 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
   password: String,
-  role: { type: String, default: "user" } // user or admin
+  role: { type: String, default: "user" }, // user or admin
+  phone: String,
+  address: String,
+  city: String,
+  profileImage: String,
+  bio: String,
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("User", userSchema);
