@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, User, Package, Plus, LogOut } from 'lucide-react';
+import { LayoutDashboard, User, Package, Plus, LogOut, Shield } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeItem, setActiveItem] = useState('dashboard');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const isAdmin = user?.role === 'admin';
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -16,7 +18,10 @@ export default function Sidebar() {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { id: 'profile', label: 'Profile', icon: User, path: '/profile' },
-    { id: 'manage', label: 'Manage Items', icon: Package, path: '/profile' },
+  ];
+
+  const adminItems = [
+    { id: 'manage', label: 'Manage Items', icon: Shield, path: '/admin' },
   ];
 
   const postItems = [
@@ -66,6 +71,37 @@ export default function Sidebar() {
             </div>
           );
         })}
+
+        {/* Admin Section - Only show for admins */}
+        {isAdmin && (
+          <>
+            <p className="text-light-200 text-xs font-semibold px-4 mb-4 mt-8 uppercase">Admin</p>
+            {adminItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => {
+                    setActiveItem(item.id);
+                    navigate(item.path);
+                  }}
+                  className="relative mb-2 cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 hover:bg-dark-700">
+                    <Icon size={20} className={isActive ? 'text-red-400' : 'text-light-200'} />
+                    <span className={`text-lg font-medium transition-colors ${isActive ? 'text-red-400' : 'text-light-200'}`}>
+                      {item.label}
+                    </span>
+                  </div>
+                  {isActive && (
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-400 rounded-r-full"></div>
+                  )}
+                </div>
+              );
+            })}
+          </>
+        )}
 
         {/* Post Items Section */}
         <p className="text-light-200 text-xs font-semibold px-4 mb-4 mt-8 uppercase">Post</p>
