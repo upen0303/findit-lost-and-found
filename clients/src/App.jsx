@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import FeaturesSection from './components/FeaturesSection';
 
 // Pages
+import PublicLanding from './pages/PublicLanding';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -32,23 +33,12 @@ export default function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Landing Page */}
+        <Route path="/" element={<PublicLanding />} />
+
         {/* Auth Routes */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-
-        {/* Landing Page */}
-        <Route path="/" element={
-          <div className="flex bg-light-100 min-h-screen">
-            <Sidebar />
-            <div className="flex-1 ml-64 pt-16">
-              <Navbar />
-              <div className="p-8">
-                <Hero />
-                <FeaturesSection />
-              </div>
-            </div>
-          </div>
-        } />
 
         {/* Protected Routes */}
         <Route path="/dashboard" element={
