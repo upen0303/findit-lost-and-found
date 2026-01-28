@@ -1,4 +1,15 @@
-const API_URL = "http://localhost:5000/api";
+// Use localhost on desktop, detect IP on mobile
+const getAPIURL = () => {
+  const hostname = window.location.hostname;
+  // If accessing from localhost, use localhost:5000
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:5000/api';
+  }
+  // If accessing from an IP address (mobile), use the same IP with port 5000
+  return `http://${hostname}:5000/api`;
+};
+
+const API_URL = getAPIURL();
 
 // Auth API calls
 export const authAPI = {

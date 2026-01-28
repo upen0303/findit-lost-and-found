@@ -45,7 +45,7 @@ export default function App() {
           <ProtectedRoute>
             <div className="flex bg-light-100 min-h-screen">
               <Sidebar />
-              <div className="flex-1 ml-64 pt-16">
+              <div className="flex-1 md:ml-64 pt-16">
                 <Navbar />
                 <Dashboard />
               </div>
@@ -57,7 +57,7 @@ export default function App() {
           <ProtectedRoute>
             <div className="flex bg-light-100 min-h-screen">
               <Sidebar />
-              <div className="flex-1 ml-64 pt-16">
+              <div className="flex-1 md:ml-64 pt-16">
                 <Navbar />
                 <Profile />
               </div>
@@ -69,7 +69,7 @@ export default function App() {
           <ProtectedRoute>
             <div className="flex bg-light-100 min-h-screen">
               <Sidebar />
-              <div className="flex-1 ml-64 pt-16">
+              <div className="flex-1 md:ml-64 pt-16">
                 <Navbar />
                 <PostLostItem />
               </div>
@@ -81,7 +81,7 @@ export default function App() {
           <ProtectedRoute>
             <div className="flex bg-light-100 min-h-screen">
               <Sidebar />
-              <div className="flex-1 ml-64 pt-16">
+              <div className="flex-1 md:ml-64 pt-16">
                 <Navbar />
                 <PostFoundItem />
               </div>
@@ -93,7 +93,7 @@ export default function App() {
           <ProtectedRoute>
             <div className="flex bg-light-100 min-h-screen">
               <Sidebar />
-              <div className="flex-1 ml-64 pt-16">
+              <div className="flex-1 md:ml-64 pt-16">
                 <Navbar />
                 <ItemDetail />
               </div>
