@@ -1,0 +1,188 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { itemsAPI } from '../services/api';
+import { MapPin, Calendar, User, Mail, Phone, ArrowLeft, Edit2, Trash2 } from 'lucide-react';
+
+export default function ItemDetail() {
+  const { type, id } = useParams();
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+  useEffect(() => {
+    fetchItem();
+  }, [id, type]);
+
+  const fetchItem = async () => {
+    try {
+      const res = type === 'lost' 
+        ? await itemsAPI.getLostItemDetail(id)
+        : await itemsAPI.getFoundItemDetail(id);
+      setItem(res);
+    } catch (err) {
+      console.error('Error fetching item:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      try {
+        if (type === 'lost') {
+          await itemsAPI.deleteLostItem(token, id);
+        } else {
+          await itemsAPI.deleteFoundItem(token, id);
+        }
+        alert('Item deleted successfully!');
+        navigate('/dashboard');
+      } catch (err) {
+        alert('Failed to delete item');
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!item) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-600">Item not found</p>
+      </div>
+    );
+  }
+
+  const isOwner = currentUser?.id === item.user?._id;
+
+  return (
+    <div className="p-8 max-w-4xl mx-auto">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/dashboard')}
+        className="flex items-center gap-2 text-primary hover:text-secondary mb-6 transition"
+      >
+        <ArrowLeft size={20} />
+        Back to Dashboard
+      </button>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Image */}
+        <div className="bg-gray-200 rounded-xl overflow-hidden h-96">
+          {item.image ? (
+            <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-gray-400">No image</div>
+          )}
+        </div>
+
+        {/* Details */}
+        <div className="space-y-6">
+          <div>
+            <div className="flex justify-between items-start mb-2">
+              <h1 className="text-3xl font-bold text-gray-900">{item.title}</h1>
+              <span className={`text-xs font-semibold px-4 py-2 rounded-full ${
+                item.status === 'Lost' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+              }`}>
+                {item.status}
+              </span>
+            </div>
+            <p className="text-gray-600">{item.category}</p>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-3 text-gray-700">
+              <MapPin size={20} className="text-primary" />
+              <span>{item.location}</span>
+            </div>
+            <div className="flex items-center gap-3 text-gray-700">
+              <Calendar size={20} className="text-primary" />
+              <span>{new Date(item.date).toLocaleDateString()}</span>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 rounded-lg p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Description</h2>
+            <p className="text-gray-700 leading-relaxed">{item.description}</p>
+          </div>
+
+          {/* Owner Info */}
+          {item.user && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Contact Information</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <User size={20} className="text-blue-600" />
+                  <div>
+                    <p className="text-sm text-gray-600">Name</p>
+                    <p className="font-semibold text-gray-900">{item.user.name}</p>
+                  </div>
+                </div>
+                {item.user.email && (
+                  <div className="flex items-center gap-3">
+                    <Mail size={20} className="text-blue-600" />
+                    <a href={`mailto:${item.user.email}`} className="text-blue-600 hover:underline">
+                      {item.user.email}
+                    </a>
+                  </div>
+                )}
+                {item.user.phone && (
+                  <div className="flex items-center gap-3">
+                    <Phone size={20} className="text-blue-600" />
+                    <a href={`tel:${item.user.phone}`} className="text-blue-600 hover:underline">
+                      {item.user.phone}
+                    </a>
+                  </div>
+                )}
+                {item.user.address && (
+                  <div>
+                    <p className="text-sm text-gray-600">Address</p>
+                    <p className="text-gray-900">{item.user.address} {item.user.city && `, ${item.user.city}`}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Owner Actions */}
+          {isOwner && (
+            <div className="flex gap-4">
+              <button
+                onClick={() => navigate(`/edit/${type}/${id}`)}
+                className="flex-1 flex items-center justify-center gap-2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition font-semibold"
+              >
+                <Edit2 size={20} />
+                Edit
+              </button>
+              <button
+                onClick={handleDelete}
+                className="flex-1 flex items-center justify-center gap-2 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition font-semibold"
+              >
+                <Trash2 size={20} />
+                Delete
+              </button>
+            </div>
+          )}
+
+          {!isOwner && (
+            <button className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+              Contact about this item
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Posted Info */}
+      <div className="mt-12 text-center text-gray-600">
+        <p>Posted on {new Date(item.createdAt).toLocaleDateString()}</p>
+      </div>
+    </div>
+  );
+}
