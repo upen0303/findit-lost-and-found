@@ -68,18 +68,18 @@ export default function PostFoundItem() {
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">Report Found Item</h1>
-      <p className="text-gray-600 mb-8">Help return this item to its owner by posting details</p>
+    <div className="p-4 md:p-8 max-w-2xl mx-auto">
+      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Report Found Item</h1>
+      <p className="text-sm md:text-base text-gray-600 mb-6 md:mb-8">Help return this item to its owner by posting details</p>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 flex items-gap-3">
-          <AlertCircle size={20} className="text-red-600" />
-          <p className="text-red-600">{error}</p>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 flex items-center gap-3">
+          <AlertCircle size={20} className="text-red-600 flex-shrink-0" />
+          <p className="text-red-600 text-sm md:text-base">{error}</p>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-4 md:p-8 space-y-4 md:space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Item Title</label>
           <input
@@ -87,7 +87,7 @@ export default function PostFoundItem() {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
             placeholder="e.g., Black Umbrella"
             required
           />
@@ -100,20 +100,20 @@ export default function PostFoundItem() {
             value={formData.description}
             onChange={handleInputChange}
             rows="4"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
             placeholder="Describe the item, its condition, distinguishing features..."
             required
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
             <select
               name="category"
               value={formData.category}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
               required
             >
               {categories.map(cat => (
@@ -129,7 +129,7 @@ export default function PostFoundItem() {
               name="date"
               value={formData.date}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
               required
             />
           </div>
@@ -142,7 +142,7 @@ export default function PostFoundItem() {
             name="location"
             value={formData.location}
             onChange={handleInputChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
             placeholder="Where was it found?"
             required
           />
@@ -150,9 +150,9 @@ export default function PostFoundItem() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
-          <label className="w-full border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center cursor-pointer hover:border-primary transition">
+          <label className="w-full border-2 border-dashed border-gray-300 rounded-lg p-6 md:p-8 flex flex-col items-center cursor-pointer hover:border-primary transition">
             <Upload size={32} className="text-gray-400 mb-2" />
-            <span className="text-gray-600">{image ? image.name : 'Click to upload or drag and drop'}</span>
+            <span className="text-gray-600 text-xs md:text-sm text-center px-2">{image ? image.name : 'Click to upload or drag and drop'}</span>
             <input
               type="file"
               onChange={handleImageChange}
@@ -165,7 +165,7 @@ export default function PostFoundItem() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg transition disabled:opacity-50"
+          className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg transition disabled:opacity-50 text-sm md:text-base"
         >
           {loading ? 'Posting...' : 'Post Found Item'}
         </button>

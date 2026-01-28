@@ -88,37 +88,37 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-gray-600">Browse lost and found items</p>
+    <div className="p-4 md:p-8">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
+        <p className="text-sm md:text-base text-gray-600">Browse lost and found items</p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-4 mb-8 border-b border-gray-200">
+      {/* Tabs - Horizontal scroll on mobile */}
+      <div className="flex gap-2 md:gap-4 mb-6 md:mb-8 border-b border-gray-200 overflow-x-auto">
         <button
           onClick={() => setActiveTab('all')}
-          className={`px-6 py-3 font-semibold transition ${
+          className={`px-3 md:px-6 py-3 font-semibold whitespace-nowrap transition text-sm md:text-base ${
             activeTab === 'all' ? 'text-primary border-b-2 border-primary' : 'text-gray-600'
           }`}
         >
-          All Items ({lostItems.length + foundItems.length})
+          All ({lostItems.length + foundItems.length})
         </button>
         <button
           onClick={() => setActiveTab('lost')}
-          className={`px-6 py-3 font-semibold transition ${
+          className={`px-3 md:px-6 py-3 font-semibold whitespace-nowrap transition text-sm md:text-base ${
             activeTab === 'lost' ? 'text-primary border-b-2 border-primary' : 'text-gray-600'
           }`}
         >
-          Lost Items ({lostItems.length})
+          Lost ({lostItems.length})
         </button>
         <button
           onClick={() => setActiveTab('found')}
-          className={`px-6 py-3 font-semibold transition ${
+          className={`px-3 md:px-6 py-3 font-semibold whitespace-nowrap transition text-sm md:text-base ${
             activeTab === 'found' ? 'text-primary border-b-2 border-primary' : 'text-gray-600'
           }`}
         >
-          Found Items ({foundItems.length})
+          Found ({foundItems.length})
         </button>
       </div>
 
@@ -129,7 +129,7 @@ export default function Dashboard() {
           <p className="text-gray-500 text-lg">No items found</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
           {displayItems.map(item => (
             <ItemCard
               key={item._id}

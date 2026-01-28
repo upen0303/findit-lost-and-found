@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, Menu, LogOut } from 'lucide-react';
+import { Bell, LogOut } from 'lucide-react';
 import { notificationsAPI } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,9 +45,17 @@ export default function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 left-64 right-0 h-16 bg-white shadow-navShadow flex items-center justify-between px-8 z-40">
-      {/* Left - Logo */}
-      <div className="flex items-center gap-2">
+    <div className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-white shadow-navShadow flex items-center justify-between px-4 md:px-8 z-40">
+      {/* Left - Logo (mobile only) */}
+      <div className="flex items-center gap-2 md:hidden">
+        <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+          <span className="text-white font-bold text-lg">F</span>
+        </div>
+        <h2 className="text-xl font-bold text-gray-900">Findit</h2>
+      </div>
+
+      {/* Logo for desktop */}
+      <div className="hidden md:flex items-center gap-2">
         <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
           <span className="text-white font-bold text-lg">F</span>
         </div>
@@ -55,7 +63,7 @@ export default function Navbar() {
       </div>
 
       {/* Right - Icons */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-3 md:gap-6">
         {/* Notifications */}
         <div className="relative">
           <button 
@@ -101,7 +109,7 @@ export default function Navbar() {
         </div>
 
         {/* Profile Avatar */}
-        <button className="w-9 h-9 bg-gradient-to-br from-primary to-secondary rounded-full hover:shadow-lg transition-shadow"></button>
+        <button className="w-9 h-9 bg-gradient-to-br from-primary to-secondary rounded-full hover:shadow-lg transition-shadow hidden sm:block"></button>
 
         {/* Logout */}
         <button 

@@ -116,21 +116,21 @@ export default function Profile() {
   );
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto">
       {/* Profile Header */}
-      <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-        <div className="flex justify-between items-start mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
+      <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 mb-6 md:mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">My Profile</h1>
           <button
             onClick={() => setEditing(!editing)}
-            className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:shadow-lg transition"
+            className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:shadow-lg transition w-full md:w-auto justify-center md:justify-start"
           >
             {editing ? <Save size={20} /> : <Edit2 size={20} />}
             {editing ? 'Save' : 'Edit'}
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {/* Profile Image */}
           <div className="flex flex-col items-center">
             <div className="w-32 h-32 rounded-full bg-gray-200 mb-4 flex items-center justify-center overflow-hidden">
@@ -141,7 +141,7 @@ export default function Profile() {
               )}
             </div>
             {editing && (
-              <label className="cursor-pointer flex items-center gap-2 text-primary hover:text-secondary transition">
+              <label className="cursor-pointer flex items-center gap-2 text-primary hover:text-secondary transition text-sm md:text-base">
                 <Camera size={20} />
                 <span>Change Photo</span>
                 <input type="file" onChange={handleImageChange} className="hidden" accept="image/*" />
@@ -160,10 +160,10 @@ export default function Profile() {
                     name="name"
                     value={formData.name || ''}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                     <input
@@ -171,7 +171,7 @@ export default function Profile() {
                       name="phone"
                       value={formData.phone || ''}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
                     />
                   </div>
                   <div>
@@ -181,7 +181,7 @@ export default function Profile() {
                       name="city"
                       value={formData.city || ''}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
                     />
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function Profile() {
                     name="address"
                     value={formData.address || ''}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
                   />
                 </div>
                 <div>
@@ -202,12 +202,12 @@ export default function Profile() {
                     value={formData.bio || ''}
                     onChange={handleInputChange}
                     rows="3"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
                   />
                 </div>
                 <button
                   onClick={handleSaveProfile}
-                  className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:shadow-lg transition"
+                  className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:shadow-lg transition text-sm md:text-base"
                 >
                   Save Changes
                 </button>
@@ -215,26 +215,26 @@ export default function Profile() {
             ) : (
               <>
                 <div>
-                  <p className="text-sm text-gray-600">Name</p>
-                  <p className="text-xl font-semibold text-gray-900">{user?.name}</p>
+                  <p className="text-xs md:text-sm text-gray-600">Name</p>
+                  <p className="text-lg md:text-xl font-semibold text-gray-900">{user?.name}</p>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-600">Phone</p>
-                    <p className="text-lg font-semibold text-gray-900">{user?.phone || 'Not set'}</p>
+                    <p className="text-xs md:text-sm text-gray-600">Phone</p>
+                    <p className="text-base md:text-lg font-semibold text-gray-900">{user?.phone || 'Not set'}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">City</p>
-                    <p className="text-lg font-semibold text-gray-900">{user?.city || 'Not set'}</p>
+                    <p className="text-xs md:text-sm text-gray-600">City</p>
+                    <p className="text-base md:text-lg font-semibold text-gray-900">{user?.city || 'Not set'}</p>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Email</p>
-                  <p className="text-lg font-semibold text-gray-900">{user?.email}</p>
+                  <p className="text-xs md:text-sm text-gray-600">Email</p>
+                  <p className="text-base md:text-lg font-semibold text-gray-900">{user?.email}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Bio</p>
-                  <p className="text-gray-900">{user?.bio || 'No bio added yet'}</p>
+                  <p className="text-xs md:text-sm text-gray-600">Bio</p>
+                  <p className="text-sm md:text-base text-gray-900">{user?.bio || 'No bio added yet'}</p>
                 </div>
               </>
             )}
@@ -243,31 +243,31 @@ export default function Profile() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 md:mb-8">
         <div className="bg-blue-50 rounded-lg p-4 text-center">
-          <p className="text-gray-600 text-sm">Total Items Posted</p>
-          <p className="text-3xl font-bold text-blue-600">{stats?.totalItemsPosted}</p>
+          <p className="text-gray-600 text-xs md:text-sm">Total Items Posted</p>
+          <p className="text-2xl md:text-3xl font-bold text-blue-600">{stats?.totalItemsPosted}</p>
         </div>
         <div className="bg-red-50 rounded-lg p-4 text-center">
-          <p className="text-gray-600 text-sm">Lost Items</p>
-          <p className="text-3xl font-bold text-red-600">{stats?.lostItems}</p>
+          <p className="text-gray-600 text-xs md:text-sm">Lost Items</p>
+          <p className="text-2xl md:text-3xl font-bold text-red-600">{stats?.lostItems}</p>
         </div>
         <div className="bg-green-50 rounded-lg p-4 text-center">
-          <p className="text-gray-600 text-sm">Found Items</p>
-          <p className="text-3xl font-bold text-green-600">{stats?.foundItems}</p>
+          <p className="text-gray-600 text-xs md:text-sm">Found Items</p>
+          <p className="text-2xl md:text-3xl font-bold text-green-600">{stats?.foundItems}</p>
         </div>
       </div>
 
       {/* My Items */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">My Items</h2>
+      <div className="bg-white rounded-xl shadow-lg p-4 md:p-8">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">My Items</h2>
 
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Lost Items ({items.lostItems.length})</h3>
+        <div className="mb-6 md:mb-8">
+          <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">Lost Items ({items.lostItems.length})</h3>
           {items.lostItems.length === 0 ? (
-            <p className="text-gray-500">No lost items posted</p>
+            <p className="text-gray-500 text-sm md:text-base">No lost items posted</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {items.lostItems.map(item => (
                 <ItemCard key={item._id} item={item} type="lost" />
               ))}
@@ -276,11 +276,11 @@ export default function Profile() {
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Found Items ({items.foundItems.length})</h3>
+          <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">Found Items ({items.foundItems.length})</h3>
           {items.foundItems.length === 0 ? (
-            <p className="text-gray-500">No found items posted</p>
+            <p className="text-gray-500 text-sm md:text-base">No found items posted</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {items.foundItems.map(item => (
                 <ItemCard key={item._id} item={item} type="found" />
               ))}
