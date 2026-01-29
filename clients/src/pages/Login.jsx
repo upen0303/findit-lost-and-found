@@ -88,6 +88,15 @@ export default function Login() {
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
+
+          <div className="flex items-center justify-between text-sm">
+            <Link to="/register" className="text-primary font-semibold hover:underline">
+              Create account
+            </Link>
+            <Link to="/forgot-password" className="text-primary font-semibold hover:underline">
+              Forgot password?
+            </Link>
+          </div>
         </form>
 
         <p className="text-center text-gray-600 mt-6">

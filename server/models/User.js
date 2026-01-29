@@ -10,6 +10,16 @@ const userSchema = new mongoose.Schema({
   city: String,
   profileImage: String,
   bio: String,
+  
+  // Email Verification
+  isEmailVerified: { type: Boolean, default: false },
+  verificationToken: String,
+  verificationTokenExpiry: Date,
+  
+  // Password Reset
+  resetToken: String,
+  resetTokenExpiry: Date,
+  
   createdAt: { type: Date, default: Date.now }
 });
 

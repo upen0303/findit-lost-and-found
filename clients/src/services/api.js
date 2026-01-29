@@ -45,6 +45,33 @@ export const authAPI = {
       body: formData
     });
     return res.json();
+  },
+
+  verifyEmail: async (token) => {
+    const res = await fetch(`${API_URL}/auth/verify-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
+    });
+    return res.json();
+  },
+
+  forgotPassword: async (email) => {
+    const res = await fetch(`${API_URL}/auth/forgot-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+    return res.json();
+  },
+
+  resetPassword: async (token, newPassword) => {
+    const res = await fetch(`${API_URL}/auth/reset-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, newPassword })
+    });
+    return res.json();
   }
 };
 
