@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, User, Package, Plus, LogOut, Shield, X, Menu } from 'lucide-react';
+import { LayoutDashboard, User, Package, Plus, LogOut, Shield, X, Menu, MessageSquare } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Sidebar() {
@@ -24,6 +24,7 @@ export default function Sidebar() {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { id: 'profile', label: 'Profile', icon: User, path: '/profile' },
+    { id: 'messages', label: 'Messages', icon: MessageSquare, path: '/messages' },
   ];
 
   const adminItems = [

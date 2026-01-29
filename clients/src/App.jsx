@@ -17,6 +17,7 @@ import Profile from './pages/Profile';
 import PostLostItem from './pages/PostLostItem';
 import PostFoundItem from './pages/PostFoundItem';
 import ItemDetail from './pages/ItemDetail';
+import Messaging from './pages/Messaging';
 
 import './index.css';
 
@@ -104,6 +105,12 @@ export default function App() {
                 <ItemDetail />
               </div>
             </div>
+          </ProtectedRoute>
+        } />
+
+        <Route path="/messages" element={
+          <ProtectedRoute>
+            <Messaging />
           </ProtectedRoute>
         } />
       </Routes>

@@ -172,7 +172,10 @@ export default function ItemDetail() {
           )}
 
           {!isOwner && (
-            <button className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg transition text-sm md:text-base">
+            <button
+              onClick={() => navigate('/messages', { state: { userId: item.user._id, userName: item.user.name, relatedItem: id, itemType: type } })}
+              className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg font-semibold hover:shadow-lg transition text-sm md:text-base"
+            >
               Contact about this item
             </button>
           )}

@@ -188,3 +188,53 @@ export const notificationsAPI = {
     return res.json();
   }
 };
+
+// Messages API
+export const messagesAPI = {
+  getConversations: async (token) => {
+    const res = await fetch(`${API_URL}/messages/conversations`, {
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  getMessages: async (token, userId) => {
+    const res = await fetch(`${API_URL}/messages/messages/${userId}`, {
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  sendMessage: async (token, receiverId, text, relatedItem = null, itemType = null) => {
+    const res = await fetch(`${API_URL}/messages/send`, {
+      method: "POST",
+      headers: { "Authorization": token, "Content-Type": "application/json" },
+      body: JSON.stringify({ receiverId, text, relatedItem, itemType })
+    });
+    return res.json();
+  },
+
+  markAllRead: async (token, userId) => {
+    const res = await fetch(`${API_URL}/messages/mark-all-read/${userId}`, {
+      method: "PUT",
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  markRead: async (token, messageId) => {
+    const res = await fetch(`${API_URL}/messages/mark-read/${messageId}`, {
+      method: "PUT",
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  deleteMessage: async (token, messageId) => {
+    const res = await fetch(`${API_URL}/messages/${messageId}`, {
+      method: "DELETE",
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  }
+};
