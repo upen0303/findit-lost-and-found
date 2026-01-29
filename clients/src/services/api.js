@@ -1,4 +1,15 @@
-const API_URL = "http://localhost:5000/api";
+// Use localhost on desktop, detect IP on mobile
+const getAPIURL = () => {
+  const hostname = window.location.hostname;
+  // If accessing from localhost, use localhost:5000
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:5000/api';
+  }
+  // If accessing from an IP address (mobile), use the same IP with port 5000
+  return `http://${hostname}:5000/api`;
+};
+
+const API_URL = getAPIURL();
 
 // Auth API calls
 export const authAPI = {
@@ -32,6 +43,33 @@ export const authAPI = {
       method: "PUT",
       headers: { "Authorization": token },
       body: formData
+    });
+    return res.json();
+  },
+
+  verifyEmail: async (token) => {
+    const res = await fetch(`${API_URL}/auth/verify-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
+    });
+    return res.json();
+  },
+
+  forgotPassword: async (email) => {
+    const res = await fetch(`${API_URL}/auth/forgot-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+    return res.json();
+  },
+
+  resetPassword: async (token, newPassword) => {
+    const res = await fetch(`${API_URL}/auth/reset-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, newPassword })
     });
     return res.json();
   }
@@ -144,6 +182,56 @@ export const notificationsAPI = {
 
   deleteNotification: async (token, id) => {
     const res = await fetch(`${API_URL}/notifications/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  }
+};
+
+// Messages API
+export const messagesAPI = {
+  getConversations: async (token) => {
+    const res = await fetch(`${API_URL}/messages/conversations`, {
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  getMessages: async (token, userId) => {
+    const res = await fetch(`${API_URL}/messages/messages/${userId}`, {
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  sendMessage: async (token, receiverId, text, relatedItem = null, itemType = null) => {
+    const res = await fetch(`${API_URL}/messages/send`, {
+      method: "POST",
+      headers: { "Authorization": token, "Content-Type": "application/json" },
+      body: JSON.stringify({ receiverId, text, relatedItem, itemType })
+    });
+    return res.json();
+  },
+
+  markAllRead: async (token, userId) => {
+    const res = await fetch(`${API_URL}/messages/mark-all-read/${userId}`, {
+      method: "PUT",
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  markRead: async (token, messageId) => {
+    const res = await fetch(`${API_URL}/messages/mark-read/${messageId}`, {
+      method: "PUT",
+      headers: { "Authorization": token }
+    });
+    return res.json();
+  },
+
+  deleteMessage: async (token, messageId) => {
+    const res = await fetch(`${API_URL}/messages/${messageId}`, {
       method: "DELETE",
       headers: { "Authorization": token }
     });

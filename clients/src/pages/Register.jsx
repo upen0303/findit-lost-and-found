@@ -53,9 +53,14 @@ export default function Register() {
         )}
 
         {success && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-gap-3">
-            <CheckCircle size={20} className="text-green-600" />
-            <p className="text-green-600">{success}</p>
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+            <div className="flex items-gap-3 mb-2">
+              <CheckCircle size={20} className="text-green-600 flex-shrink-0" />
+              <p className="text-green-600 font-semibold">{success}</p>
+            </div>
+            <p className="text-green-700 text-sm ml-8">
+              A verification email has been sent. Please check your email to verify your account before logging in.
+            </p>
           </div>
         )}
 
