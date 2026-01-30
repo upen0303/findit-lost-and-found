@@ -5,11 +5,14 @@ A modern, full-stack Lost & Found platform for reporting and recovering lost ite
 ## 🚀 Features
 
 ### User Features
-- 🔐 **User Authentication** - Secure login/registration with JWT
+- 🔐 **User Authentication** - Secure login/registration with JWT (Phase 1)
+- ✉️ **Email Verification** - Verify email on signup with token validation (Phase 1)
+- 🔑 **Password Reset** - Forgot password flow with email recovery (Phase 1)
 - 📝 **Report Lost Items** - Post detailed information about lost items
 - 🎁 **Report Found Items** - List items you found to help owners
 - 🔍 **Smart Matching** - Automatic matching of lost and found items by category and location
 - 👤 **User Profile** - Manage profile, view your posts, track statistics
+- 💬 **Direct Messaging** - Real-time messaging with users about items (Phase 2)
 - 🔔 **Notifications** - Get notified when items match or others interact
 - 📱 **Image Upload** - Upload photos of items (via Cloudinary)
 - 📊 **Dashboard** - Browse all items with filtering options
@@ -22,20 +25,19 @@ A modern, full-stack Lost & Found platform for reporting and recovering lost ite
 
 ```
 findit-lost-and-found/
-├── client/              # Legacy React frontend (backup)
 ├── clients/             # Main React + Vite frontend
 │   ├── src/
-│   │   ├── pages/      # Login, Register, Dashboard, Profile, PostLost, PostFound, ItemDetail
+│   │   ├── pages/      # Login, Register, Dashboard, Profile, PostLost, PostFound, ItemDetail, Messaging
 │   │   ├── components/ # Sidebar, Navbar, Hero, FeaturesSection
-│   │   ├── services/   # API integration
+│   │   ├── services/   # API integration (auth, items, notifications, messages)
 │   │   └── index.css   # Tailwind styles
 │   └── package.json
 └── server/              # Node.js + Express backend
-    ├── models/         # User, LostItem, FoundItem, Notification schemas
-    ├── routes/         # Auth, Items, Admin, Notifications routes
+    ├── models/         # User, LostItem, FoundItem, Notification, Message schemas
+    ├── routes/         # Auth, Items, Admin, Notifications, Messages routes
     ├── controllers/    # Business logic
     ├── middlewares/    # Auth, Admin, Upload
-    ├── utils/          # Cloudinary config
+    ├── utils/          # Cloudinary, Email service
     └── server.js       # Main server file
 ```
 
@@ -50,13 +52,14 @@ findit-lost-and-found/
 
 **Backend:**
 - Node.js
-- Express
-- MongoDB
+- Express 5.2.1
+- MongoDB 9.1.5
 - Mongoose
 - JWT Authentication
-- Bcryptjs (Password hashing)
-- Multer (File upload)
+- Bcryptjs 3.0.3 (Password hashing)
+- Multer 2.0.2 (File upload)
 - Cloudinary (Image storage)
+- Nodemailer 6.9.7 (Email service with Gmail SMTP)
 
 ## 🚀 Getting Started
 
@@ -97,8 +100,11 @@ Frontend runs on `http://localhost:3002` (or next available port)
 ## 📡 API Endpoints
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
+- `POST /api/auth/register` - Register new user with email verification
 - `POST /api/auth/login` - Login user
+- `POST /api/auth/verify-email` - Verify email token (Phase 1)
+- `POST /api/auth/forgot-password` - Request password reset email (Phase 1)
+- `POST /api/auth/reset-password` - Reset password with token (Phase 1)
 - `GET /api/auth/profile` - Get user profile + stats
 - `PUT /api/auth/profile` - Update user profile
 
@@ -121,6 +127,14 @@ Frontend runs on `http://localhost:3002` (or next available port)
 - `PUT /api/notifications/read-all` - Mark all as read (auth required)
 - `DELETE /api/notifications/:id` - Delete notification (auth required)
 
+### Messaging (Phase 2)
+- `GET /api/messages/conversations` - Get all conversations with unread count
+- `GET /api/messages/messages/:userId` - Get message history with user
+- `POST /api/messages/send` - Send a new message
+- `PUT /api/messages/mark-read/:messageId` - Mark message as read
+- `PUT /api/messages/mark-all-read/:userId` - Mark all messages from user as read
+- `DELETE /api/messages/:messageId` - Delete a message (sender only)
+
 ### Admin
 - `GET /api/admin/reports` - Get all reports (admin required)
 - `DELETE /api/admin/report/:id` - Delete report (admin required)
@@ -129,13 +143,17 @@ Frontend runs on `http://localhost:3002` (or next available port)
 
 | Page | Route | Description |
 |------|-------|-------------|
-| Login | `/login` | User login |
-| Register | `/register` | New user signup |
-| Dashboard | `/dashboard` | Browse all items |
+| Login | `/login` | User login with forgot password link (Phase 1) |
+| Register | `/register` | New user signup with email verification (Phase 1) |
+| Verify Email | `/verify-email/:token` | Verify email address (Phase 1) |
+| Forgot Password | `/forgot-password` | Request password reset (Phase 1) |
+| Reset Password | `/reset-password/:token` | Reset password with token (Phase 1) |
+| Dashboard | `/dashboard` | Browse all items with filtering |
 | Profile | `/profile` | User profile & manage items |
 | Post Lost | `/post-lost` | Report lost item |
 | Post Found | `/post-found` | Report found item |
-| Item Detail | `/item/:type/:id` | View item details |
+| Item Detail | `/item/:type/:id` | View item details with contact button |
+| Messaging | `/messages` | Direct messaging with other users (Phase 2) |
 
 ## 🔐 Security Features
 
@@ -156,16 +174,22 @@ Frontend runs on `http://localhost:3002` (or next available port)
 
 ## 🚧 Future Enhancements
 
-- [ ] Real-time WebSocket notifications
-- [ ] Direct messaging between users
+### Phase 3: Real-time Messaging Upgrade
+- [ ] WebSocket integration (Socket.io) for true real-time updates
+- [ ] Typing indicators
+- [ ] Online/offline status
+- [ ] Message read receipts
+
+### Additional Features
+- [ ] Push notifications (browser & mobile)
 - [ ] Item status tracking (Lost/Found/Resolved)
 - [ ] User ratings and reviews
-- [ ] Email notifications
+- [ ] Email notifications for matches
 - [ ] Mobile app (React Native)
 - [ ] Map integration for item locations
 - [ ] Advanced search filters
-- [ ] Email verification on signup
-- [ ] Password reset functionality
+- [ ] Message reactions/emojis
+- [ ] Image/file sharing in messages
 
 ## 📝 License
 
@@ -178,3 +202,11 @@ Created with ❤️ for community reunification
 ---
 
 **Happy Finding! 🎉**
+
+---
+
+## 📚 Documentation
+
+- [Phase 2 Summary](./PHASE_2_SUMMARY.md) - Detailed implementation guide
+- [Phase 2 Testing Guide](./PHASE_2_TESTING.md) - Test scenarios and edge cases
+- [Project Status](./PROJECT_STATUS.md) - Complete project overview
